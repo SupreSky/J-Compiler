@@ -23,7 +23,6 @@
 %token ID LIT
 %token COMMENT
 
-%expect 28
 
 %%
 prog	:	mainc cdcls
@@ -50,9 +49,9 @@ cdcls	:	cdcl cdcls
 	;
 
 cdcl	:	CLASS ID LBP vdcls mdcls RBP
-		{ printf("ClassDecl -> class id lbp VarDecl* MethodDecl* rbp\n"); }
+		{ printf("ClassDecl -> class id lbp MethodDecl* rbp\n"); }
 	;
-
+	
 vdcls	:	vdcl vdcls
 		{ printf("(for VarDecl*) vdcls : vdcl vdcls\n"); }
 	|
@@ -63,13 +62,14 @@ vdcl	:	type ID SEMI
 		{ printf("VarDecl -> Type id semi\n"); }
 	;
 
+
 mdcls	:	mdcl mdcls
 		{ printf("(for MethodDecl*) mdcls : mdcl mdcls\n"); }
 	|
 		{ printf("(for MethodDecl*) mdcls : \n"); }
 	;
 
-mdcl	:	PUB type ID LP formals RP LBP vdcls stmts RETURN exp SEMI RBP
+mdcl	:	PUB type ID LP formals RP LBP stmts RETURN exp SEMI RBP
 		{ printf("MethodDecl -> public Type id lp FormalList rp lbp Statements* return Exp semi rbp\n"); }
 	;
 
@@ -103,35 +103,58 @@ stmt : LBP stmts RBP
 		{ printf("stmt -> WHILE LP exp RP stmts\n"); }
 	| PRINT LP exp RP SEMI
 		{ printf("stmt -> PRINT LP exp RP SEMI\n"); }
-	| ID LSP exp RSP EQ exp SEMI
+	| ID ASSIGN exp SEMI
+		{ printf("stmt -> ID ASSIGN exp SEMI\n"); }
+	| ID LSP exp RSP ASSIGN exp SEMI
 		{ printf("stmt -> ID LSP exp RSP EQ exp SEMI\n"); }
-	| vdcls
-		{ printf("stmt -> vdcls\n"); }
+	| vdcl
+		{ printf("VDCL\n"); }
 	;
 
 relop : ADD
+	{ printf("ADD"); }
 	| MINUS
+	{ printf("MINUS"); }
 	| TIMES
+	{ printf("TIMES"); }
 	| OR
+	{ printf("OR"); }
 	| AND
+	{ printf("AND"); }
 	| LT
+	{ printf("LT"); }
 	| LE
+	{ printf("LE"); }
 	| EQ
+	{ printf("EQ"); }
 	| DOT
+	{ printf("DOT"); }
 	;
 
 exp : exp relop exp
+		{ printf("relop"); }
 	| ID LSP exp RSP
+		{ printf("LSP exp RSP"); }
 	| ID LP explist RP
+		{ printf("LP explist RP"); }
 	| LP exp RP
-	| NUM
+		{ printf("LP exp RP"); }
+	| LIT
+		{ printf("LIT"); }
 	| TRUE
+		{ printf("TRUE"); }
 	| FALSE
+		{ printf("FALSE"); }
 	| ID
-	| THIS
+		{ printf("ID"); }
+	| THIS	
+		{ printf("THIS"); }
 	| NEW INT LSP exp RSP
+		{ printf("NEW INT LSP exp RSP"); }
 	| NEW ID LP RP
+		{ printf("NEW ID LP RP"); }
 	| NOT exp
+		{ printf("NOT"); }
 	;
 
 exprests : exprest exprests
@@ -147,9 +170,6 @@ explist : exp exprests
 exprest : COMMA exp
 		{ printf("ExpRest -> comma Exp \n"); }
 	;
-
-
-// Write the grammar rules for type, statement, exp, explist, exprest
 
 %%
 

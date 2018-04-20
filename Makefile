@@ -3,7 +3,7 @@ jparse:	main.o j_parse.o j_lex.o
 	gcc -o jparse main.o j_parse.o j_lex.o
 
 debug:
-	bison -d --report=all -o java_parse.c java_parse.y
+	bison -d --report=all -o j_parse.c j_parse.y
 
 # 1
 j_parse.c:	j_parse.y

@@ -1,3 +1,4 @@
+/*
 #define L_MIN 0
 #define ID 1
 #define LIT 2
@@ -35,7 +36,7 @@
 #define NOT 34
 #define TURE 35
 #define FALSE 36
-
+*/
 
 extern FILE *yyin;
 extern int yylex();

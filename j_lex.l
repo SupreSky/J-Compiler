@@ -15,7 +15,7 @@ static		{return STATIC;}
 String		{return STR;}
 void		{return VOID;}
 main		{return MAIN;}
-print		{return PRINT;}
+System.Out.println		{return PRINT;}
 int		{return INT;}
 boolean {return BOOLEAN;}
 true  {return TRUE;}
@@ -45,8 +45,11 @@ this		{return THIS;}
 "="		{return ASSIGN;}
 "."		{return DOT;}
 "!"   {return NOT;}
+"//"{NONNL}* {}
 
-// Write the lexical rules for COMMENT, ID, LIT
+
+{LIT} {return LIT;}
+{ID} {return ID;}
 
 [ \t\n]		{}
 .		{}
